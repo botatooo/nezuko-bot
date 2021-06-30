@@ -15,7 +15,7 @@ class RoleManagementCog(commands.Cog):
     @commands.has_permissions(manage_roles=True)
     @commands.cooldown(1, 3, commands.BucketType.member)
     async def addrole(self, ctx: commands.Context, member: discord.Member, *,
-                      roles: discord.abc.Snowflake):
+                      roles):
         role_object_list = [ctx.guild.get_role(role) for role in roles]
         await member.add_roles(*role_object_list)
         await ctx.send(f'Added role(s) to {member}. 🎭')
