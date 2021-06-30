@@ -26,15 +26,9 @@ if __name__ == '__main__':
         print('Jishaku not found.',
               'Use `pip install -r requirements.txt` to install it.')
 
-    for item in os.listdir('Cogs'):
-        if os.path.isfile(item):
-            if splitext(item)[1] == '.py':
-                client.load_extension(f'Cogs.{splitext(item)[0]}')
-        elif os.path.isdir(item):
-            for filename in os.listdir(os.path.join('Cogs', item)):
-                if splitext(item)[1] == '.py':
-                    client.load_extension(
-                        f'Cogs.{item}.{splitext(filename)[0]}')
+    for filename in os.listdir('Cogs'):
+        if splitext(filename)[1] == '.py':
+            client.load_extension(f'Cogs.{splitext(filename)[0]}')
 
 
 @client.event

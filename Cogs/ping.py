@@ -23,7 +23,7 @@ class PingCog(commands.Cog):
         embed.title = None
         embed.add_field(name='Ping', value=f'{int(ping)}ms')
         embed.add_field(name='Heartbeat',
-                        value=f'{self.client.latency} seconds')
+                        value=f'{round(self.client.latency, 3)} seconds')
 
         await message.edit(embed=embed)
 

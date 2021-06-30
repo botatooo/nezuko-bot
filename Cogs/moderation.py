@@ -17,7 +17,7 @@ class ModerationCog(commands.Cog):
         'Purge messages. If no channel is specified, defaults to current one. If no amount is specified, defaults to 10.'
     )
     @commands.guild_only()
-    @commands.has_permissions(manage_message=True)
+    @commands.has_permissions(manage_messages=True)
     @commands.cooldown(1, 5, commands.BucketType.channel)
     async def clear(self, ctx: commands.Context, amount=10):
         await ctx.channel.purge(limit=amount + 1)

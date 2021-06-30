@@ -75,7 +75,8 @@ class HelpCog(commands.Cog):
             embed.set_thumbnail(url=self.client.user.avatar_url)
             for command in self.client.commands:
                 embed.add_field(name=command.name,
-                                value=command.description,
+                                value=command.description
+                                if command.description else 'No description',
                                 inline=False)
             await ctx.channel.send(embed=embed)
 
