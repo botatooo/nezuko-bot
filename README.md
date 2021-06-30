@@ -4,4 +4,4 @@
 
 ### Configuration
 
-Rename `configuration.example.jsonc` to `configuration.jsonc` and set the values accordingly.
+Rename `configuration.example.json` to `configuration.json` and set the values accordingly.
