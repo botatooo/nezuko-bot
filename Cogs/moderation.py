@@ -13,7 +13,6 @@ class ModerationCog(commands.Cog):
     def __init__(self, client: commands.Bot):
         self.client = client
 
-    # Clear
     @commands.command(
         name='clear',
         aliases=['purge'],
@@ -26,9 +25,9 @@ class ModerationCog(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.channel)
     async def clear(self, ctx: commands.Context, amount=10):
         await ctx.channel.purge(limit=amount + 1)
-        await ctx.send(f'Purged {amount} messages. 🧹')
+        msg = await ctx.send(f'Purged {amount} messages. 🧹')
+        await msg.delete(delay=5)
 
-    # Kick
     @commands.command(name='kick',
                       aliases=['boot', '👢'],
                       usage='<member> [reason=None]',
@@ -44,7 +43,6 @@ class ModerationCog(commands.Cog):
         await member.kick(reason=reason)
         await ctx.send(f'Kicked {member}. 👢')
 
-    # Ban and Unban
     @commands.command(name='ban',
                       aliases=['begone', '404', 'gtfo', '🚪'],
                       usage='<member> [reason=None]',
