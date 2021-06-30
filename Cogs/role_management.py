@@ -1,6 +1,11 @@
 import discord
 from discord.ext import commands
 
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from utils.checks import is_bot_admin_or_has_perm  #pylint-ignore: import-error
+
 
 class RoleManagementCog(commands.Cog):
 
@@ -12,11 +17,13 @@ class RoleManagementCog(commands.Cog):
                       usage='<member> <roles...>',
                       description='Add a role to a member.')
     @commands.guild_only()
-    @commands.has_permissions(manage_roles=True)
+    @is_bot_admin_or_has_perm('manage_roles')
     @commands.cooldown(1, 3, commands.BucketType.member)
-    async def addrole(self, ctx: commands.Context, member: discord.Member, *,
-                      roles):
-        role_object_list = [ctx.guild.get_role(role) for role in roles]
+    async def addrole(self, ctx: commands.Context, member: discord.Member,
+                      *roles):
+        role_object_list = [
+            ctx.message.guild.get_role(int(role)) for role in roles
+        ]
         await member.add_roles(*role_object_list)
         await ctx.send(f'Added role(s) to {member}. 🎭')
 
@@ -25,16 +32,18 @@ class RoleManagementCog(commands.Cog):
                       usage='<member> <roles...>',
                       description='Remove a role from a member.')
     @commands.guild_only()
-    @commands.has_permissions(manage_roles=True)
+    @is_bot_admin_or_has_perm('manage_roles')
     @commands.cooldown(1, 3, commands.BucketType.member)
-    async def removerole(self, ctx: commands.Context, member: discord.Member, *,
-                         roles: discord.abc.Snowflake):
+    async def removerole(self, ctx: commands.Context, member: discord.Member,
+                         *roles):
         if 'all' in roles:
             await member.remove_roles(
                 *[role for role in member.roles if role.name != '@everyone'])
             await ctx.send(f'Removed all roles from {member}. 🎭')
             return
-        role_object_list = [ctx.guild.get_role(role) for role in roles]
+        role_object_list = [
+            ctx.message.guild.get_role(int(role)) for role in roles
+        ]
         await member.remove_roles(*role_object_list)
         await ctx.send(f'Removed role(s) to {member}. 🎭')
 
