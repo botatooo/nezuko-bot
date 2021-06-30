@@ -7,7 +7,7 @@ import discord
 from discord.ext import commands
 
 # Get configuration.jsonc
-with open('configuration.jsonc', 'r') as config:
+with open('configuration.json', 'r') as config:
     data = json.load(config)
     token = data['token']
     prefix = data['prefix']
