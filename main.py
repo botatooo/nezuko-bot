@@ -15,6 +15,8 @@ with open('configuration.json', 'r') as config:
 
 # Intents
 intents = discord.Intents.default()
+intents.members = True
+
 # The bot
 client = commands.Bot(prefix, intents=intents, owner_ids=owner_ids)
 
@@ -49,15 +51,14 @@ N::::::N     N:::::::::Ne:::::::e              z::::::z       u:::::uuuu:::::u  
 N::::::N      N::::::::Ne::::::::e            z::::::zzzzzzzz u:::::::::::::::uuk::::::k k:::::k o:::::ooooo:::::o
 N::::::N       N:::::::N e::::::::eeeeeeee   z::::::::::::::z u:::::::::::::::uk::::::k  k:::::ko:::::::::::::::o
 N::::::N        N::::::N  ee:::::::::::::e  z:::::::::::::::z  uu::::::::uu:::uk::::::k   k:::::koo:::::::::::oo
-NNNNNNNN         NNNNNNN    eeeeeeeeeeeeee  zzzzzzzzzzzzzzzzz    uuuuuuuu  uuuukkkkkkkk    kkkkkkk ooooooooooo''')
+NNNNNNNN         NNNNNNN    eeeeeeeeeeeeee  zzzzzzzzzzzzzzzzz    uuuuuuuu  uuuukkkkkkkk    kkkkkkk ooooooooooo'''
+         )
     print(
-        f'Logged in as {client.user.name} ({client.user.id}) and active in {len(client.guilds)} guilds.'
-    )
-    print(
+        f'Logged in as {client.user.name} ({client.user.id}) and active in {len(client.guilds)} guilds.\n',
         f'Discord.PY version: {discord.__version__} | Python version: {sys.version}'
     )
     await client.change_presence(activity=discord.Activity(
-        type=discord.ActivityType.competing, name='with Tajiro and Zenitsu'))
+        type=discord.ActivityType.playing, name='with Tajiro and Zenitsu'))
 
 
 client.run(token)
