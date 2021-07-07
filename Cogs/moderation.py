@@ -25,7 +25,7 @@ class ModerationCog(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.channel)
     async def clear(self, ctx: commands.Context, amount=10):
         await ctx.channel.purge(limit=amount + 1)
-        msg = await ctx.send(f'Purged {amount} messages. 🧹')
+        msg = await ctx.reply(f'Purged {amount} messages. 🧹')
         await msg.delete(delay=5)
 
     @commands.command(name='kick',
@@ -41,7 +41,7 @@ class ModerationCog(commands.Cog):
                    *,
                    reason: str = None):
         await member.kick(reason=reason)
-        await ctx.send(f'Kicked {member}. 👢')
+        await ctx.reply(f'Kicked {member}. 👢')
 
     @commands.command(name='ban',
                       aliases=['begone', '404', 'gtfo', '🚪'],
@@ -61,7 +61,7 @@ class ModerationCog(commands.Cog):
         elif delete_message_days < 0:
             delete_message_days = 0
         await member.ban(delete_message_days=delete_message_days, reason=reason)
-        await ctx.send(f'Banned {member}. 🚪')
+        await ctx.reply(f'Banned {member}. 🚪')
 
     @commands.command(name='unban',
                       aliases=['bacc', '🔑'],
@@ -78,7 +78,7 @@ class ModerationCog(commands.Cog):
         async for banned_user in ctx.guild.bans():
             if banned_user.user == member:
                 await banned_user.user.unban(reason=reason)
-                await ctx.send(f'Unbanned {member}. 🔑')
+                await ctx.reply(f'Unbanned {member}. 🔑')
                 break
 
     # Mute and Unmute
@@ -107,7 +107,7 @@ class ModerationCog(commands.Cog):
                                               overwrite=perms,
                                               reason='Creating muted role.')
         await member.add_roles(muted_role, reason=reason)
-        await ctx.send(f'Muted {member}. 🤫')
+        await ctx.reply(f'Muted {member}. 🤫')
 
     @commands.command(name='unmute',
                       aliases=['😮'],
@@ -123,7 +123,7 @@ class ModerationCog(commands.Cog):
                      reason: str = None):
         muted_role = utils.get(member.guild.roles, name='Muted')
         await member.remove_roles(muted_role, reason=reason)
-        await ctx.send(f'Unmuted {member}. 😮')
+        await ctx.reply(f'Unmuted {member}. 😮')
 
 
 def setup(client: commands.Bot):

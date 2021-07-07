@@ -9,15 +9,15 @@ class PingCog(commands.Cog):
     def __init__(self, client: commands.bot):
         self.client = client
 
-    @commands.command(name="ping",
-                      usage="",
-                      description="Display the bot's ping.")
+    @commands.command(name='ping',
+                      usage='',
+                      description='Display the bot\'s ping.')
     @commands.cooldown(1, 2, commands.BucketType.member)
     async def ping(self, ctx):
         embed = discord.Embed(title='Measuring...')
 
         before = time.monotonic()
-        message = await ctx.send(embed=embed)
+        message = await ctx.reply(embed=embed)
         ping = (time.monotonic() - before) * 1000
 
         embed.title = None
