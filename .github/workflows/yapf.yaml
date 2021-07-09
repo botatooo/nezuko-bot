@@ -1,9 +1,8 @@
-name: Format with YAPF
 
 # Controls when the action will run. Triggers the workflow on push to master.
 on:
   push:
-    branches: [master]
+    branches: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel.
 jobs:
@@ -15,17 +14,32 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job.
     steps:
       # Check out code using Git.
-      - uses: actions/checkous@v2
+      - uses: actions/checkout@v2
       - name: Set up Git
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          git config pull.rebase false # merge (the default strategy)
+          git config pull.rebase false
           git pull
+      
       - name: Set up YAPF
         run: |
           pip install pip --upgrade
           pip install yapf
+      
       - name: Execute YAPF
         # https://stackoverflow.com/a/53357859
         run: find . -name "*.py" -print0 | xargs -0 yapf --style {} -i
+      
+      - name: Add changes to Git tracking
+        run: git add -A .
+      
+      - name: Commit changes
+        run: |
+          git commit -m "Format with YAPF"
+          git diff-index --quiet HEAD || git commit --amend --no-edit
+        
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
