@@ -28,16 +28,17 @@ if __name__ == '__main__':
         print('Jishaku not found.', 'Use ``pipenv install`` to install it.')
 
     COG_DIRECTORY = os.path.join(os.path.split(__file__)[0], 'Cogs')
-    for filename in os.listdir(COG_DIRECTORY):
-        if splitext(filename)[1] == '.py':
-            client.load_extension(f'Cogs.{splitext(filename)[0]}')
-            print(f'Loaded cog: {splitext(filename)[0]}')
-        elif filename.lower() in ['commands', 'events']:
-            for cog in os.listdir(os.path.join(COG_DIRECTORY, filename)):
-                if splitext(cog)[1] == '.py':
+
+    for cog in os.listdir(COG_DIRECTORY):
+        if cog.endswith('.py') == '.py':
+            client.load_extension(f'Cogs.{splitext(cog)[0]}')
+            print(f'Loaded cog: {splitext(cog)[0]}')
+        elif cog.lower() in ['commands', 'events']:
+            for specific_cog in os.listdir(os.path.join(COG_DIRECTORY, cog)):
+                if cog.endswith('.py'):
                     client.load_extension(
-                        f'Cogs.{filename}.{splitext(cog)[0]}')
-                    print(f'Loaded cog: {filename}.{splitext(cog)[0]}')
+                        f'Cogs.{cog}.{splitext(specific_cog)[0]}')
+                    print(f'Loaded cog: {cog}.{splitext(specific_cog)[0]}')
 
 
 @client.event
