@@ -1,6 +1,5 @@
 import os
 
-import discord
 from discord.ext import commands
 
 owner_ids = [int(id) for id in os.getenv('OWNER_IDS').split(',')]

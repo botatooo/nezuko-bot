@@ -116,7 +116,7 @@ class OnCommandErrorCog(commands.Cog):
             await ctx.reply(f'This command ({ctx.command}) has been disabled.')
         elif isinstance(error, commands.CommandInvokeError):
             await ctx.reply(
-                'An exception was raised: ```py\n{error.original}```')
+                f'An exception was raised: ```py\n{error.original}```')
         elif isinstance(error, commands.CommandOnCooldown):
             await ctx.reply(
                 f'You are on a cooldown (type: {error.cooldown.type}). You can retry again after {round(error.retry_after, 1)} seconds.'

@@ -25,9 +25,14 @@ class ModerationCog(commands.Cog):
     @commands.guild_only()
     @is_bot_admin_or_has_perm('manage_messages')
     @commands.cooldown(1, 5, commands.BucketType.channel)
-    async def clear(self, ctx: commands.Context, amount=10):
-        await ctx.channel.purge(limit=amount + 1)
-        msg = await ctx.reply(f'Purged {amount} messages. 🧹')
+    async def clear(self,
+                    ctx: commands.Context,
+                    amount=10,
+                    channel: discord.TextChannel = None):
+        channel = channel if channel else ctx.channel
+        await channel.purge(limit=amount + 1)
+        msg = await ctx.reply(
+            f'Purged {amount} messages in {channel.mention}. 🧹')
         await msg.delete(delay=5)
 
     @commands.command(name='kick',
@@ -54,16 +59,13 @@ class ModerationCog(commands.Cog):
     @commands.cooldown(1, 3, commands.BucketType.member)
     async def ban(self,
                   ctx: commands.Context,
-                  member: discord.Member,
-                  delete_message_days: int = 0,
+                  user: discord.User,
                   *,
                   reason: str = None):
-        if delete_message_days > 7:
-            delete_message_days = 7
-        elif delete_message_days < 0:
-            delete_message_days = 0
-        await member.ban(delete_message_days=delete_message_days, reason=reason)
-        await ctx.reply(f'Banned {member}. 🚪')
+        if user not in ctx.guild.members:
+            user = await self.client.fetch_user(user.id)
+        await ctx.guild.ban(user=user, reason=reason)
+        await ctx.reply(f'Banned {user}. 🚪')
 
     @commands.command(name='unban',
                       aliases=['bacc', '🔑'],
@@ -74,13 +76,15 @@ class ModerationCog(commands.Cog):
     @commands.cooldown(1, 3, commands.BucketType.member)
     async def unban(self,
                     ctx: commands.Context,
-                    member: discord.User,
+                    user_id: int,
                     *,
                     reason: str = None):
-        async for banned_user in ctx.guild.bans():
-            if banned_user.user == member:
-                await banned_user.user.unban(reason=reason)
-                await ctx.reply(f'Unbanned {member}. 🔑')
+        bans = await ctx.guild.bans()
+        for banned_user in bans:
+            if banned_user.user.id == user_id:
+                await ctx.guild.unban(user=banned_user.user, reason=reason)
+                user = await self.client.fetch_user(user_id)
+                await ctx.reply(f'Unbanned {user}. 🔑')
                 break
 
     # Mute and Unmute
@@ -93,10 +97,10 @@ class ModerationCog(commands.Cog):
     @commands.cooldown(1, 3, commands.BucketType.member)
     async def mute(self,
                    ctx: commands.Context,
-                   member: discord.User,
+                   member: discord.Member,
                    *,
                    reason: str = None):
-        muted_role = utils.get(member.guild.roles, name='Muted')
+        muted_role = utils.get(ctx.guild.roles, name='Muted')
         if not muted_role:
             muted_role = await ctx.guild.create_role(
                 name='Muted',
@@ -120,10 +124,10 @@ class ModerationCog(commands.Cog):
     @commands.cooldown(1, 3, commands.BucketType.member)
     async def unmute(self,
                      ctx: commands.Context,
-                     member: discord.User,
+                     member: discord.Member,
                      *,
                      reason: str = None):
-        muted_role = utils.get(member.guild.roles, name='Muted')
+        muted_role = utils.get(ctx.guild.roles, name='Muted')
         await member.remove_roles(muted_role, reason=reason)
         await ctx.reply(f'Unmuted {member}. 😮')
 
