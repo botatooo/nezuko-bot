@@ -7,7 +7,6 @@ TOKEN = os.getenv('TOKEN')
 
 
 class BotAdminCog(commands.Cog):
-
     def __init__(self, client: commands.Bot):
         self.client = client
         self.status_obj: discord.Status = discord.Status.online
@@ -67,10 +66,9 @@ class BotAdminCog(commands.Cog):
                 'watching',
                 'competing',
         ]:
-            self.activity_obj = discord.Activity(name=name,
-                                                 type=getattr(
-                                                     discord.ActivityType,
-                                                     ' '.join(activity).lower()))
+            self.activity_obj = discord.Activity(
+                name=name,
+                type=getattr(discord.ActivityType, ' '.join(activity).lower()))
             await self.client.change_presence(status=self.status_obj,
                                               activity=self.activity_obj)
         elif activity.lower() == 'streaming':
