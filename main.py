@@ -36,8 +36,9 @@ if __name__ == '__main__':
             print(f'Loaded cog: {splitext(filename)[0]}')
         elif filename.lower() in ['commands', 'events']:
             for cog in os.listdir(os.path.join(COG_DIRECTORY, filename)):
-                client.load_extension(f'Cogs.{filename}.{splitext(cog)[0]}')
-                print(f'Loaded cog: {filename}.{splitext(cog)[0]}')
+                if splitext(cog)[1] == '.py':
+                    client.load_extension(f'Cogs.{filename}.{splitext(cog)[0]}')
+                    print(f'Loaded cog: {filename}.{splitext(cog)[0]}')
 
 
 @client.event
