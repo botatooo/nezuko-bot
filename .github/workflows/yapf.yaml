@@ -36,8 +36,9 @@ jobs:
         run: git add -A .
       
       - name: Commit changes
-        run: git commit -m "Format with YAPF"
-        run: git diff-index --quiet HEAD || git commit --amend --no-edit
+        run: |
+          git commit -m "Format with YAPF"
+          git diff-index --quiet HEAD || git commit --amend --no-edit
         
       - name: Push changes
         uses: ad-m/github-push-action@master
