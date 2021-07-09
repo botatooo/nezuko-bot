@@ -37,7 +37,8 @@ if __name__ == '__main__':
         elif filename.lower() in ['commands', 'events']:
             for cog in os.listdir(os.path.join(COG_DIRECTORY, filename)):
                 if splitext(cog)[1] == '.py':
-                    client.load_extension(f'Cogs.{filename}.{splitext(cog)[0]}')
+                    client.load_extension(
+                        f'Cogs.{filename}.{splitext(cog)[0]}')
                     print(f'Loaded cog: {filename}.{splitext(cog)[0]}')
 
 
@@ -61,7 +62,7 @@ N::::::N      N::::::::N e::::::::e            z::::::zzzzzzzz  u:::::::::::::::
 N::::::N       N:::::::N  e::::::::eeeeeeee   z::::::::::::::z  u:::::::::::::::u k::::::k  k:::::k o:::::::::::::::o
 N::::::N        N::::::N   ee:::::::::::::e  z:::::::::::::::z   uu::::::::uu:::u k::::::k   k:::::k oo:::::::::::oo
 NNNNNNNN         NNNNNNN     eeeeeeeeeeeeee  zzzzzzzzzzzzzzzzz     uuuuuuuu  uuuu kkkkkkkk    kkkkkkk  ooooooooooo'''
-         )
+          )
     print(
         f'Logged in as {client.user.name} ({client.user.id}) and active in {len(client.guilds)} guilds.',
         f'\nDiscord.PY version: {discord.__version__} | Python version: {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}'

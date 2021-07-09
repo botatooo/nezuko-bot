@@ -7,7 +7,6 @@ TOKEN = os.getenv('TOKEN')
 
 
 class BotAdminCog(commands.Cog):
-
     def __init__(self, client: commands.Bot):
         self.client = client
 
@@ -63,8 +62,8 @@ class BotAdminCog(commands.Cog):
                 'competing',
         ]:
             await self.client.change_presence(activity=discord.Activity(
-                name=name, type=getattr(discord.ActivityType, activity.lower()))
-                                             )
+                name=name,
+                type=getattr(discord.ActivityType, activity.lower())))
         elif activity.lower() == 'streaming':
             await ctx.reply('Streaming not supported.')
         else:

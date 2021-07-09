@@ -5,7 +5,6 @@ from discord.ext import commands
 
 
 class OnCommandErrorCog(commands.Cog):
-
     def __init__(self, client: commands.Bot):
         self.client = client
 
@@ -46,7 +45,8 @@ class OnCommandErrorCog(commands.Cog):
                 f'The emoji {error.argument} does match the correct emoji format.'
             )
         elif isinstance(error, commands.BadBoolArgument):
-            await ctx.reply(f'The boolean {error.argument} is not convertible.')
+            await ctx.reply(f'The boolean {error.argument} is not convertible.'
+                            )
         elif isinstance(error, commands.BadArgument):
             await ctx.reply('Failed to parse or convert one of the arguments.')
         elif isinstance(error, commands.BadUnionArgument):

@@ -5,7 +5,6 @@ from discord.ext import commands
 
 
 class PingCog(commands.Cog):
-
     def __init__(self, client: commands.bot):
         self.client = client
 
