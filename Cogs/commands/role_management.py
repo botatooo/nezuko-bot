@@ -10,7 +10,6 @@ from utils.checks import is_bot_admin_or_has_perm  # pylint: disable=import-erro
 
 
 class RoleManagementCog(commands.Cog):
-
     def __init__(self, client: commands.Bot):
         self.client = client
 
