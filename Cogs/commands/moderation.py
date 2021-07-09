@@ -1,12 +1,11 @@
+import sys
+from pathlib import Path
+
 import discord
 from discord import utils
 from discord.ext import commands
 
-import os, sys
-sys.path.insert(
-    0,
-    os.path.dirname(os.path.dirname(os.path.dirname(
-        os.path.abspath(__file__)))))
+sys.path.insert(0, Path(__file__).parent.parent.parent.absolute())
 
 from utils.checks import is_bot_admin_or_has_perm  # pylint: disable=import-error
 
