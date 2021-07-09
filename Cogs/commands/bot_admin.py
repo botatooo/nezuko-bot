@@ -7,8 +7,12 @@ TOKEN = os.getenv('TOKEN')
 
 
 class BotAdminCog(commands.Cog):
+
     def __init__(self, client: commands.Bot):
         self.client = client
+        self.status_obj: discord.Status = discord.Status.online
+        self.activity_obj: discord.Activity = discord.Activity(
+            type=discord.ActivityType.playing, name='with Tajiro and Zenitsu')
 
     @commands.command(name='say',
                       aliases=['send', 'echo'],
@@ -43,8 +47,9 @@ class BotAdminCog(commands.Cog):
                 'dnd', 'do_not_disturb', 'idle', 'invisible', 'offline',
                 'online'
         ]:
-            await self.client.change_presence(
-                status=getattr(discord.Status, status.lower()))
+            self.status_obj = getattr(discord.Status, status.lower())
+            await self.client.change_presence(status=self.status_obj,
+                                              activity=self.activity_obj)
         else:
             await ctx.reply('That is not a status.')
 
@@ -54,20 +59,24 @@ class BotAdminCog(commands.Cog):
         usage='<playing|listening|watching|competing> <name> [url]',
         description='Set the current activity to something.')
     @commands.is_owner()
-    async def activity(self, ctx: commands.Context, activity: str, name: str):
+    async def activity(self, ctx: commands.Context, activity: str, *,
+                       name: str):
         if activity.lower() in [
                 'playing',
                 'listening',
                 'watching',
                 'competing',
         ]:
-            await self.client.change_presence(activity=discord.Activity(
-                name=name,
-                type=getattr(discord.ActivityType, activity.lower())))
+            self.activity_obj = discord.Activity(name=name,
+                                                 type=getattr(
+                                                     discord.ActivityType,
+                                                     ' '.join(activity).lower()))
+            await self.client.change_presence(status=self.status_obj,
+                                              activity=self.activity_obj)
         elif activity.lower() == 'streaming':
-            await ctx.reply('Streaming not supported.')
+            await ctx.reply('Streaming is not supported.')
         else:
-            await ctx.reply('That is not an activity.')
+            await ctx.reply('That is not a valid activity.')
 
     @commands.command(name='restart',
                       aliases=['reboot'],
