@@ -4,4 +4,4 @@
 
 ### Configuration
 
-Rename `configuration.example.json` to `configuration.json` and set the values accordingly.
+Rename `.env.example` to `.env` and set the values accordingly.

@@ -1,11 +1,9 @@
-import json
+import os
 
 import discord
 from discord.ext import commands
 
-with open('configuration.json', 'r', encoding='utf-8') as config:
-    data = json.load(config)
-    owner_ids = data['owner_ids']
+owner_ids = [int(id) for id in os.getenv('OWNER_IDS').split(',')]
 
 
 def is_bot_admin_or_has_perm(permission):

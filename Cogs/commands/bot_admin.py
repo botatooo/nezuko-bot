@@ -1,5 +1,9 @@
+import os
+
 import discord
 from discord.ext import commands
+
+TOKEN = os.getenv('TOKEN')
 
 
 class BotAdminCog(commands.Cog):
@@ -65,6 +69,14 @@ class BotAdminCog(commands.Cog):
             await ctx.reply('Streaming not supported.')
         else:
             await ctx.reply('That is not an activity.')
+
+    @commands.command(name='restart',
+                      aliases=['reboot'],
+                      description='Reboot the bot.')
+    @commands.is_owner()
+    async def restart(self, ctx: commands.Context):
+        await ctx.bot.logout()
+        await ctx.bot.login(TOKEN)
 
 
 def setup(client: commands.Bot):
