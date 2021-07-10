@@ -1,7 +1,7 @@
 import os
 import sys
 from dotenv import load_dotenv, find_dotenv
-from os.path import splitext
+from os.path import splitext, join
 
 import discord
 from discord.ext import commands
@@ -30,12 +30,12 @@ if __name__ == '__main__':
     COG_DIRECTORY = os.path.join(os.path.split(__file__)[0], 'Cogs')
 
     for cog in os.listdir(COG_DIRECTORY):
-        if cog.endswith('.py') == '.py':
+        if cog.endswith('.py'):
             client.load_extension(f'Cogs.{splitext(cog)[0]}')
             print(f'Loaded cog: {splitext(cog)[0]}')
         elif cog.lower() in ['commands', 'events']:
-            for specific_cog in os.listdir(os.path.join(COG_DIRECTORY, cog)):
-                if cog.endswith('.py'):
+            for specific_cog in os.listdir(join(COG_DIRECTORY, cog)):
+                if specific_cog.endswith('.py'):
                     client.load_extension(
                         f'Cogs.{cog}.{splitext(specific_cog)[0]}')
                     print(f'Loaded cog: {cog}.{splitext(specific_cog)[0]}')
@@ -61,7 +61,7 @@ N::::::N      N::::::::N e::::::::e            z::::::zzzzzzzz  u:::::::::::::::
 N::::::N       N:::::::N  e::::::::eeeeeeee   z::::::::::::::z  u:::::::::::::::u k::::::k  k:::::k o:::::::::::::::o
 N::::::N        N::::::N   ee:::::::::::::e  z:::::::::::::::z   uu::::::::uu:::u k::::::k   k:::::k oo:::::::::::oo
 NNNNNNNN         NNNNNNN     eeeeeeeeeeeeee  zzzzzzzzzzzzzzzzz     uuuuuuuu  uuuu kkkkkkkk    kkkkkkk  ooooooooooo'''
-          )
+         )
     print(
         f'Logged in as {client.user.name} ({client.user.id}) and active in {len(client.guilds)} guilds.',
         f'\nDiscord.PY version: {discord.__version__} | Python version: {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}'

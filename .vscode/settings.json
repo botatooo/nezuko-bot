@@ -6,5 +6,7 @@
     "**/node_modules/**",
     "**/.metadata/**",
     "**/site-packages/**"
-  ]
+  ],
+  "python.linting.pylintEnabled": true,
+  "python.linting.enabled": true
 }

@@ -7,8 +7,8 @@
       "label": "Install Dependencies (Pipenv)",
       "detail": "Installs Nezuko's dependencies.",
       "type": "shell",
-      "command": "pipenv",
-      "args": ["install", "--dev"]
+      "command": "python",
+      "args": ["-m", "pipenv", "sync", "--dev"]
     }
   ]
 }
