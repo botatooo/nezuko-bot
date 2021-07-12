@@ -9,7 +9,7 @@ class HelpCog(commands.Cog):
         self.client = client
 
     @commands.command(name='help',
-                      usage='[commandName]',
+                      usage='[command name]',
                       description='Display the help message.',
                       aliases=['h', '?'])
     @commands.cooldown(1, 2, commands.BucketType.member)
