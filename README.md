@@ -16,4 +16,4 @@ Run the following command: `python3 -m pip install --user pipenv`
 
 ## Project installation
 
-Now that you have PipEnv, run `pipenv install`
+Now that you have PipEnv, run `pipenv sync`
