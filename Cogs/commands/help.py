@@ -5,6 +5,7 @@ from discord.ext import commands
 
 
 class HelpCog(commands.Cog):
+
     def __init__(self, client: commands.Bot):
         self.client = client
 
@@ -59,7 +60,7 @@ class HelpCog(commands.Cog):
                     embed.add_field(
                         name='Usage',
                         value=
-                        f'{self.client.command_prefix}{commandName2.name} {commandName2.usage}',
+                        f'{self.client.command_prefix(self.client, ctx.message)}{commandName2.name} {commandName2.usage}',
                         inline=False)
                 embed.add_field(name='Description',
                                 value=commandName2.description,
@@ -69,7 +70,7 @@ class HelpCog(commands.Cog):
             embed = discord.Embed(
                 title='Help',
                 description=
-                f'{self.client.command_prefix}help [commandName], display the help list or the help data for a specific command.',
+                f'{self.client.command_prefix(self.client, ctx.message)}help [command name], display the help list or the help data for a specific command.',
                 color=randint(0, 0xffffff))
             embed.set_thumbnail(url=self.client.user.avatar_url)
             for command in self.client.commands:

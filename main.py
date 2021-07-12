@@ -6,6 +6,8 @@ from os.path import splitext, join
 import discord
 from discord.ext import commands
 
+from utils import db
+
 # Get .env
 load_dotenv(find_dotenv())
 
@@ -13,11 +15,22 @@ token = os.getenv('TOKEN')
 prefix = os.getenv('PREFIX')
 owner_ids = [int(id) for id in os.getenv('OWNER_IDS').split(',')]
 
+
+# Server Prefix
+def get_prefix(bot: commands.Bot, message: discord.Message):
+    guild_id = message.guild.id
+    prefix = db.get_prefix(guild_id=guild_id)
+    return prefix
+
+
 # Intents
 intents = discord.Intents.default()
 intents.members = True  #pylint: disable=assigning-non-slot
+
 # The bot
-client = commands.Bot(prefix, intents=intents, owner_ids=owner_ids)
+client = commands.Bot(command_prefix=get_prefix,
+                      intents=intents,
+                      owner_ids=owner_ids)
 
 # Load cogs
 if __name__ == '__main__':

@@ -1,15 +1,11 @@
-import sys
-from pathlib import Path
-
 import discord
 from discord.ext import commands
 
-sys.path.insert(0, Path(__file__).parent.parent.parent.absolute())
-
-from utils.checks import is_bot_admin_or_has_perm  # pylint: disable=import-error
+from utils.checks import is_owner_or_has_perm  # pylint: disable=import-error
 
 
 class RoleManagementCog(commands.Cog):
+
     def __init__(self, client: commands.Bot):
         self.client = client
 
@@ -18,7 +14,7 @@ class RoleManagementCog(commands.Cog):
                       usage='<member> <roles...>',
                       description='Add a role to a member.')
     @commands.guild_only()
-    @is_bot_admin_or_has_perm('manage_roles')
+    @is_owner_or_has_perm('manage_roles')
     @commands.cooldown(1, 3, commands.BucketType.member)
     async def addrole(self, ctx: commands.Context, member: discord.Member,
                       *roles):
@@ -33,7 +29,7 @@ class RoleManagementCog(commands.Cog):
                       usage='<member> <roles...>',
                       description='Remove a role from a member.')
     @commands.guild_only()
-    @is_bot_admin_or_has_perm('manage_roles')
+    @is_owner_or_has_perm('manage_roles')
     @commands.cooldown(1, 3, commands.BucketType.member)
     async def removerole(self, ctx: commands.Context, member: discord.Member,
                          *roles):

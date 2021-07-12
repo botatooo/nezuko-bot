@@ -1,16 +1,12 @@
-import sys
-from pathlib import Path
-
 import discord
 from discord import utils
 from discord.ext import commands
 
-sys.path.insert(0, Path(__file__).parent.parent.parent.absolute())
-
-from utils.checks import is_bot_admin_or_has_perm  # pylint: disable=import-error
+from utils.checks import is_owner_or_has_perm  # pylint: disable=import-error
 
 
 class ModerationCog(commands.Cog):
+
     def __init__(self, client: commands.Bot):
         self.client = client
 
@@ -22,7 +18,7 @@ class ModerationCog(commands.Cog):
         'Purge messages. If no channel is specified, defaults to current one. If no amount is specified, defaults to 10.'
     )
     @commands.guild_only()
-    @is_bot_admin_or_has_perm('manage_messages')
+    @is_owner_or_has_perm('manage_messages')
     @commands.cooldown(1, 5, commands.BucketType.channel)
     async def clear(self,
                     ctx: commands.Context,
@@ -38,8 +34,8 @@ class ModerationCog(commands.Cog):
                       aliases=['boot', '👢'],
                       usage='<member> [reason=None]',
                       description='Kick a user.')
-    @commands.guild_only()  #    @is_bot_admin_or_has_perm('manage_messages')
-    @is_bot_admin_or_has_perm('kick_members')
+    @commands.guild_only()  #    @is_owner_or_has_perm('manage_messages')
+    @is_owner_or_has_perm('kick_members')
     @commands.cooldown(1, 3, commands.BucketType.member)
     async def kick(self,
                    ctx: commands.Context,
@@ -54,7 +50,7 @@ class ModerationCog(commands.Cog):
                       usage='<member> [reason=None]',
                       description='Ban a user.')
     @commands.guild_only()
-    @is_bot_admin_or_has_perm('ban_members')
+    @is_owner_or_has_perm('ban_members')
     @commands.cooldown(1, 3, commands.BucketType.member)
     async def ban(self,
                   ctx: commands.Context,
@@ -71,7 +67,7 @@ class ModerationCog(commands.Cog):
                       usage='<member> [reason=None]',
                       description='Unban a user.')
     @commands.guild_only()
-    @is_bot_admin_or_has_perm('ban_members')
+    @is_owner_or_has_perm('ban_members')
     @commands.cooldown(1, 3, commands.BucketType.member)
     async def unban(self,
                     ctx: commands.Context,
@@ -92,7 +88,7 @@ class ModerationCog(commands.Cog):
                       usage='<member> [reason=None]',
                       description='Mute a user.')
     @commands.guild_only()
-    @is_bot_admin_or_has_perm('manage_roles')
+    @is_owner_or_has_perm('manage_roles')
     @commands.cooldown(1, 3, commands.BucketType.member)
     async def mute(self,
                    ctx: commands.Context,
@@ -119,7 +115,7 @@ class ModerationCog(commands.Cog):
                       usage='<member> [reason=None]',
                       description='Unmute a user.')
     @commands.guild_only()
-    @is_bot_admin_or_has_perm('manage_roles')
+    @is_owner_or_has_perm('manage_roles')
     @commands.cooldown(1, 3, commands.BucketType.member)
     async def unmute(self,
                      ctx: commands.Context,
