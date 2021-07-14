@@ -17,3 +17,11 @@ Run the following command: `python3 -m pip install --user pipenv`
 ## Project installation
 
 Now that you have PipEnv, run `pipenv sync`
+
+---
+
+<p align="center">
+  <a href="https://github.com/botatooo/nezuko-bot/actions/workflows/yapf.yaml">
+    <img alt=".github/workflows/yapf.yaml" src="https://github.com/botatooo/nezuko-bot/actions/workflows/yapf.yaml/badge.svg?branch=master"></img>
+  </a>
+</p>
