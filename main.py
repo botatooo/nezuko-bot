@@ -61,7 +61,7 @@ N::::::N      N::::::::N e::::::::e            z::::::zzzzzzzz  u:::::::::::::::
 N::::::N       N:::::::N  e::::::::eeeeeeee   z::::::::::::::z  u:::::::::::::::u k::::::k  k:::::k o:::::::::::::::o
 N::::::N        N::::::N   ee:::::::::::::e  z:::::::::::::::z   uu::::::::uu:::u k::::::k   k:::::k oo:::::::::::oo
 NNNNNNNN         NNNNNNN     eeeeeeeeeeeeee  zzzzzzzzzzzzzzzzz     uuuuuuuu  uuuu kkkkkkkk    kkkkkkk  ooooooooooo'''
-         )
+          )
     print(
         f'Logged in as {client.user.name} ({client.user.id}) and active in {len(client.guilds)} guilds.',
         f'\nDiscord.PY version: {discord.__version__} | Python version: {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}'
